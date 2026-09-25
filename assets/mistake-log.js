@@ -499,6 +499,12 @@
     });
   }
 
+  function supplementMarkup(text) {
+    return String(text).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    }).replace(/«u»/g, '<u>').replace(/«\/u»/g, '</u>');
+  }
+
   function supplementSourceQuestion(supplement) {
     var article = document.createElement('article');
     article.className = 'source-question supplement-source-question';
@@ -507,12 +513,12 @@
     String(supplement.passage || '').split(/\n\s*\n/).forEach(function (part) {
       if (!part.trim()) return;
       var paragraph = document.createElement('p');
-      paragraph.textContent = part.trim();
+      paragraph.innerHTML = supplementMarkup(part.trim());
       passage.appendChild(paragraph);
     });
     var stem = document.createElement('p');
     stem.className = 'logbook-question-prompt';
-    stem.textContent = String(supplement.stem || '');
+    stem.innerHTML = supplementMarkup(String(supplement.stem || ''));
     article.append(passage, stem);
     var choices = (supplement.options || []).slice(0, 4).map(function (text, index) { return String.fromCharCode(65 + index) + '. ' + text; });
     return { content: article, choices: choices.length === 4 ? choices : ['A.', 'B.', 'C.', 'D.'] };

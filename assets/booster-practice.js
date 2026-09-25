@@ -73,12 +73,16 @@
     });
   }
 
+  function markup(text) {
+    return escapeHtml(text).replace(/«u»/g, '<u>').replace(/«\/u»/g, '</u>');
+  }
+
   function supplementCard(item) {
     var options = (item.options || []).slice(0, 4);
     while (options.length < 4) options.push('');
     return '<article class="question booster-inline-card supplement-question" id="q-' + Number(item.number) + '">' +
       '<div class="qhead"><h2>Question ' + Number(item.number) + '</h2></div>' +
-      '<div class="booster-text-question">' + paragraphs(item.passage) + '<p class="stem">' + escapeHtml(item.stem || '') + '</p></div>' +
+      '<div class="booster-text-question">' + paragraphs(item.passage) + '<p class="stem">' + markup(item.stem || '') + '</p></div>' +
       '<p class="answer-prompt">Choose your answer.</p>' +
       '<ol class="choices booster-letter-choices booster-text-choices">' +
       options.map(function (text, index) { return '<li class="choice"><strong>' + String.fromCharCode(65 + index) + '</strong><span class="choice-text">' + escapeHtml(text) + '</span></li>'; }).join('') +
@@ -87,7 +91,7 @@
 
   function paragraphs(text) {
     return String(text || '').split(/\n\s*\n/).filter(function (part) { return part.trim(); }).map(function (part) {
-      return '<p>' + escapeHtml(part.trim()).replace(/\n/g, '<br>') + '</p>';
+      return '<p>' + markup(part.trim()).replace(/\n/g, '<br>') + '</p>';
     }).join('');
   }
 
