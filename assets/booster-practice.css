@@ -187,7 +187,7 @@ body.portal-archived .choice { cursor: default; }
   .teacher-answer-summary { break-inside: avoid; margin: 24px auto 0; }
 }
 
-/* MAG-SAT supplement questions are served as text after course access */
+/* Extra practice questions are served as text after course access */
 .booster-text-question{margin:0 0 14px;font-size:16px;line-height:1.6}
 .booster-text-question p{margin:0 0 10px}
 .booster-text-question .stem{font-weight:700}
